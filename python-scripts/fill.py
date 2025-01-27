@@ -115,3 +115,34 @@ email_body = email_body.replace("{pickup_info}", pickup_info(location))
 email_body = email_body.replace("{parking_info}", parking_info(location))
 
 print(email_body)
+
+
+import csv
+# i want to change this to use pandas 
+
+def generate_email(row):
+    # Assuming your email_template function is defined earlier
+    email_body = email_template.replace("{parent_name}", row["parent_name"])
+    email_body = email_body.replace("{semester}", "Winter 2 2025")
+    email_body = email_body.replace("{student_name}", row["student_name"])
+    email_body = email_body.replace("{class_name}", row["class_name"])
+    email_body = email_body.replace("{class_time}", row["class_time"])
+    email_body = email_body.replace("{username}", row["username"])
+    email_body = email_body.replace("{password}", row["password"])
+    
+    # Dynamically add location-specific info
+    email_body = email_body.replace("{location_address}", address_fill(row["location"]))
+    email_body = email_body.replace("{location_phone}", phone_fill(row["location"]))
+    email_body = email_body.replace("{class_specs}", get_class_specs(row["class_name"]))
+    email_body = email_body.replace("{dropoff_info}", dropoff_info(row["location"]))
+    email_body = email_body.replace("{pickup_info}", pickup_info(row["location"]))
+    email_body = email_body.replace("{parking_info}", parking_info(row["location"]))
+
+    return email_body
+
+# Read CSV file
+with open('emails.csv', mode='r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        email = generate_email(row)
+        print(email)
