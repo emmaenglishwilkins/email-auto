@@ -6,12 +6,18 @@
 
 <p>This is an in-person class in our {location_name} location. The address is <b>{location_address}</b></p>
 
+{ % if parking_info}
 <p>{parking_info}</p>
+{% endif %}
 
+{ % if parking_info}
 <p>{class_specs}</p>
+{% endif %}
 
+{% if username %}
 <p>Username: {username}<br>
 Password: {password}</p>
+{% endif %}
 
 <p><b>Drop-off and Pick-Up</b></p>
 <p>{dropoff_info}</p>
